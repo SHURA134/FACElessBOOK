@@ -1,11 +1,10 @@
-import { client } from  "../Models/db";
+import { client } from "../Models/postgress";
 import bcrypt from 'bcrypt';
 //Реализуйте систему регистрации и аутентификации пользователей.
 //Пользователи должны иметь уникальные идентификаторы, их личные данные (имя, фамилия, электронная почта, пароль и т. д.) должны храниться в SQL базе данных.
 //Профили пользователей:
 const SALT_ROUNDS = 10;
 
-await client.connect().catch(err =>console.log(err));
 export async function createTable() {
     try{
         await client.query(`CREATE TABLE IF NOT EXISTS facelessbook.users (

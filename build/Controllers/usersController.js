@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createUser = exports.createTable = void 0;
-const db_1 = require("../Models/db");
+const postgress_1 = require("../Models/postgress");
 const bcrypt_1 = __importDefault(require("bcrypt"));
 //Реализуйте систему регистрации и аутентификации пользователей.
 //Пользователи должны иметь уникальные идентификаторы, их личные данные (имя, фамилия, электронная почта, пароль и т. д.) должны храниться в SQL базе данных.
@@ -12,7 +12,7 @@ const bcrypt_1 = __importDefault(require("bcrypt"));
 const SALT_ROUNDS = 10;
 async function createTable() {
     try {
-        await db_1.client.query(`CREATE TABLE IF NOT EXISTS facelessbook.users (
+        await postgress_1.client.query(`CREATE TABLE IF NOT EXISTS facelessbook.users (
                                         ID serial4 NOT NULL,
                                         first_name varchar(10),
                                         last_name varchar(20),
@@ -28,7 +28,7 @@ async function createTable() {
 exports.createTable = createTable;
 async function getUsers() {
     try {
-        const users = await db_1.client.query(`SELECT * FROM facelessbook.users `);
+        const users = await postgress_1.client.query(`SELECT * FROM facelessbook.users `);
         return users.rows;
     }
     catch (err) {
@@ -43,7 +43,7 @@ async function createUser({ name, lastName, email, login, password }) {
     let message = "";
     try {
         if (!loginExist && !emailExist) {
-            await db_1.client.query(`INSERT INTO facelessbook.users (first_name,last_name,email,login,password) VALUES ('${name}','${lastName}', '${email}', '${login}', '${hashedPassword}')`);
+            await postgress_1.client.query(`INSERT INTO facelessbook.users (first_name,last_name,email,login,password) VALUES ('${name}','${lastName}', '${email}', '${login}', '${hashedPassword}')`);
             message = "registration successful";
         }
         if (loginExist) {

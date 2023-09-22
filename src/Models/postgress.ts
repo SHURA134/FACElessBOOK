@@ -1,11 +1,14 @@
 import {Client} from 'pg';
+import * as dotenv from 'dotenv';
 
+dotenv.config();
 export const client = new Client({
-    user: 'postgres',
+    user: process.env.POSTGRES_USER,
     password: process.env.POSTGRES_PASSWORD,
     host: process.env.POSTGRES_HOST,
-    port: 3000,
+    port: Number(process.env.POSTGRES_PORT),
     database: process.env.POSTGRES_DB
-})
+});
 
+client.connect();
 
