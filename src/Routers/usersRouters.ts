@@ -5,19 +5,16 @@ import {body, validationResult} from "express-validator";
 
 export const usersRouter = Router();
 
-
 usersRouter.post('/registration',
-    body('login').isString(),
-    body('password').isLength({
+    body('login', "1").isString(),
+    body('password', "2").isLength({
         min: 3
     })  ,
-    body('name').isString(),
-    body('last_name').isString(),
-    body('age').isNumeric(),
-    body('avatar_link').isString(),
+    body('name', "3").isString(),
+    body('last_name', "4").isString(),
+    body('age', "5").isNumeric(),
+    body('avatar_link', "6").isString(),
     async (request, response) =>{
-
-
         const errors = validationResult(request);
         if (!errors.isEmpty()) {
             return response.status(401).json({ errors: errors.array() });
@@ -31,8 +28,7 @@ usersRouter.post('/registration',
 
 })
 
-
-usersRouter.post('/authorization' ,
+usersRouter.post('/authorization',
     body('login').isString(),
     body('password').isLength({
         min: 3
@@ -55,12 +51,14 @@ usersRouter.post('/authorization' ,
 
 })
 
-usersRouter.post('/logOut', async (request  , response ) =>{
-    const {login} = request.body;
-    //@ts-ignore
-    request.session[login]= undefined;
+usersRouter.post('/logOut',
+    body('login').isString(),
+    async (request  , response ) =>{
+        const {login} = request.body;
+        //@ts-ignore
+        request.session[login]= undefined;
 
-    return response.status(200).send('logout is successful');
+        return response.status(200).send('logout is successful');
 })
 
 

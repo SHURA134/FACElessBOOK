@@ -1,5 +1,8 @@
-export function authMiddleware(request : any    , response : any  , next : any) {
-    const login: string = request.body.login;
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.authMiddleware = void 0;
+function authMiddleware(request, response, next) {
+    const login = request.body.login;
     console.log("REQUETS", login);
     console.log(request.session[login]);
     if (!login) {
@@ -10,3 +13,4 @@ export function authMiddleware(request : any    , response : any  , next : any) 
     }
     next();
 }
+exports.authMiddleware = authMiddleware;
